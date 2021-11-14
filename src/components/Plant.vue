@@ -13,8 +13,8 @@
                 @click:append-outer="deleteGen"
             ></v-text-field>
         </div>
-        <div class="plant-gens-container" v-if="!editMode" >
-            <div class="plant-gens">
+        <div v-if="!editMode" class="plant-gens-container">
+            <div v-bind:class="['plant-gens', {'best': best}]">
                 <span
                     v-for="gen of gensModel"
                     :key="gen.id"
@@ -39,6 +39,7 @@
 export default {
     props: {
         gens: String,
+        best: Boolean
     },
     data: () => ({
         genRegEx: /(W|X|H|G|Y)|(w|x|h|g|y)/,
@@ -125,5 +126,9 @@ export default {
 .bad-gen {
     background-color: #f16868;
     color: white;
+}
+
+.best {
+    border: 2px solid #ff9800;
 }
 </style>
