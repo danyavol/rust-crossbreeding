@@ -1,24 +1,3 @@
-# rust-crossbreeding
+# Rust Crossbreeding Helper
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![image](https://user-images.githubusercontent.com/48417874/141701882-2c617834-45d9-42b5-ad05-6a9976e1cff5.png)
