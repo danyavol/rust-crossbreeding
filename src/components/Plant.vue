@@ -116,6 +116,7 @@ export default {
     height: 25px;
     line-height: 25px;
     text-align: center;
+    font-weight: 500;
 }
 
 .good-gen {

@@ -10,9 +10,10 @@
                 v-on:change="onPlantChange($event, plant.id)"
             />
         </div>
+        <ConfirmModal :title="'Are you sure you want to delete the group?'" v-on:confirm="deleteGroup" v-model="showDialog"/>
         <div class="controls-wrapper">
             <v-btn elevation="2" @click="addPlant"><v-icon left>mdi-plus</v-icon>Add gen</v-btn>
-            <v-btn elevation="2" @click="deleteGroup"><v-icon left>mdi-delete</v-icon>Delete group</v-btn>
+            <v-btn elevation="2" @click="showDialog = true"><v-icon left>mdi-delete</v-icon>Delete group</v-btn>
         </div>
     </div>
 </template>
@@ -20,6 +21,7 @@
 <script>
 import Plant from "./Plant.vue";
 import getBestPlants from '../services/crossbreeding.service';
+import ConfirmModal from './ConfirmModal.vue';
 
 export default {
     props: {
@@ -27,10 +29,12 @@ export default {
     },
     data: () => ({
         plantsModel: [],
-        bestPlants: []
+        bestPlants: [],
+        showDialog: false
     }),
     components: {
         Plant,
+        ConfirmModal
     },
     methods: {
         deletePlant(id) {
@@ -82,5 +86,12 @@ export default {
 .controls-wrapper {
     display: flex;
     justify-content: space-between;
+}
+
+@media screen and (max-width: 600px) {
+    .controls-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
 }
 </style>

@@ -1,9 +1,9 @@
 const VALUE = {
-    Y: 100,
-    G: 80,
-    H: 30,
+    Y: 1,
+    G: 1,
+    H: 0.5,
     X: 0,
-    W: -50
+    W: -0.2
 };
 
 const PRIORITY = {
