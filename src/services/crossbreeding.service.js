@@ -13,25 +13,20 @@ const PRIORITY = {
 
 export default function getBestPlants(plants) {
     const pl = plants.filter(p => p.gens != null);
-    if (pl.length < 3) return [];
+    if (pl.length < 2) return [];
 
     let bestTrio = [];
     let bestValue = null;
-    
-    for (let p1 = 0; p1 < pl.length; p1++) {
-        for (let p2 = 0; p2 < pl.length; p2++) {
-            for (let p3 = 0; p3 < pl.length; p3++) {
-                if (pl[p1].id === pl[p2].id || pl[p1].id === pl[p3].id || pl[p2].id === pl[p3].id) continue;
-                const currentPlants = [pl[p1], pl[p2], pl[p3]];
-                let crossbreedingValue = getCrossbreedingValue(currentPlants.map(p => p.gens));
 
-                if (bestValue == null || bestValue.avg < crossbreedingValue.avg) {
-                    bestValue = crossbreedingValue;
-                    bestTrio = currentPlants.map(g => g.id);
-                }
-            }
+    const combinations = getAllCombinations(plants).sort((a, b) => a.length - b.length);
+    combinations .forEach(currentPlants => {
+        let crossbreedingValue = getCrossbreedingValue(currentPlants.map(p => p.gens));
+
+        if (bestValue == null || bestValue.avg < crossbreedingValue.avg) {
+            bestValue = crossbreedingValue;
+            bestTrio = currentPlants.map(g => g.id);
         }
-    }
+    });
 
     return bestTrio;
 }
@@ -46,7 +41,8 @@ function getCrossbreedingValue(gensArray) {
     for (let n = 0; n < 6; n++) {
         const gens = [];
         for (let i = 0; i < gensArray.length; i++) {
-            gens.push(gensArray[i][n]);
+            if (gensArray[i])
+                gens.push(gensArray[i][n]);
         }
         const res = getGensCrossbreedingValue(gens);
         result.min += res.min;
@@ -79,5 +75,18 @@ function getGensCrossbreedingValue(gens) {
         result.max == null || result.max < potentialValue ? result.max = potentialValue : null;
     });
 
+    return result;
+}
+
+function getAllCombinations(array) {
+    const result = [];
+    const f = function (accumulation, array) {
+        for (let i = 0; i < array.length; i++) {
+            
+            result.push([...accumulation, array[i]]);
+            f([...accumulation, array[i]], array.slice(i + 1));
+        }
+    }
+    f([], array);
     return result;
 }
